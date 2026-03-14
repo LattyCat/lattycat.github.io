@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lullia - Gentle tracking for your mind and body</title>
+    <meta name="description" content="Lullia is a wellness tracking app that gently helps you understand your mind and body rhythms.">
+    <link rel="icon" href="../images/icon.jpg" type="image/jpeg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --lavender-deep: #4a3a6b;
+            --lavender-mid: #6b5a8e;
+            --lavender-soft: #9b8bb8;
+            --lavender-light: #c4b5d9;
+            --lavender-pale: #e8dff0;
+            --lavender-whisper: #f4f0f8;
+            --moon-glow: #f0e6ff;
+            --heart-pink: #d4a0b9;
+            --heart-rose: #c48ba0;
+            --warm-cream: #faf8fc;
+            --text-primary: #2d2440;
+            --text-secondary: #5a4d6e;
+            --text-light: #8a7d9e;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --card-border: rgba(155, 139, 184, 0.2);
+            --shadow-soft: 0 4px 24px rgba(74, 58, 107, 0.08);
+            --shadow-hover: 0 8px 32px rgba(74, 58, 107, 0.14);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Zen Kaku Gothic New', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 300;
+            color: var(--text-primary);
+            background: var(--warm-cream);
+            line-height: 1.8;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Background atmosphere */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse at 20% 0%, rgba(200, 180, 230, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(212, 160, 185, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(155, 139, 184, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Moon decorations */
+        .moon-float {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .moon-float--1 {
+            width: 300px;
+            height: 300px;
+            top: -80px;
+            right: -60px;
+            background: radial-gradient(circle at 40% 40%, rgba(240, 230, 255, 0.4), rgba(196, 181, 217, 0.1) 60%, transparent 70%);
+            animation: float-slow 20s ease-in-out infinite;
+        }
+
+        .moon-float--2 {
+            width: 200px;
+            height: 200px;
+            bottom: 10%;
+            left: -40px;
+            background: radial-gradient(circle at 60% 40%, rgba(212, 160, 185, 0.15), transparent 70%);
+            animation: float-slow 25s ease-in-out infinite reverse;
+        }
+
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(250, 248, 252, 0.8);
+            border-bottom: 1px solid var(--card-border);
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            padding: 12px 32px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .lang-switch {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--lavender-mid);
+            text-decoration: none;
+            padding: 6px 16px;
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .lang-switch:hover {
+            background: var(--lavender-pale);
+            color: var(--lavender-deep);
+            border-color: var(--lavender-soft);
+        }
+
+        /* Sections common */
+        section {
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 32px 80px;
+        }
+
+        .hero-content {
+            max-width: 640px;
+        }
+
+        .hero-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 28px;
+            box-shadow: var(--shadow-hover), 0 0 60px rgba(155, 139, 184, 0.15);
+            margin-bottom: 40px;
+            animation: icon-appear 1s ease-out 0.2s both;
+        }
+
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(48px, 8vw, 80px);
+            font-weight: 300;
+            letter-spacing: 6px;
+            color: var(--lavender-deep);
+            margin-bottom: 20px;
+            animation: fade-up 0.8s ease-out 0.4s both;
+        }
+
+        .hero-tagline {
+            font-size: clamp(16px, 2.5vw, 20px);
+            font-weight: 300;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            line-height: 1.6;
+            animation: fade-up 0.8s ease-out 0.6s both;
+        }
+
+        .hero-moon {
+            display: inline-block;
+            margin-top: 48px;
+            font-size: 24px;
+            opacity: 0.3;
+            animation: fade-up 0.8s ease-out 0.8s both, pulse-gentle 4s ease-in-out infinite;
+        }
+
+        @keyframes icon-appear {
+            from { opacity: 0; transform: scale(0.8) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        @keyframes fade-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse-gentle {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.5; }
+        }
+
+        /* About */
+        .about {
+            padding: 80px 32px 100px;
+            text-align: center;
+        }
+
+        .about-text {
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 16px;
+            line-height: 2;
+            color: var(--text-secondary);
+            letter-spacing: 0.3px;
+        }
+
+        .about-text .heart-icon {
+            display: inline-block;
+            color: var(--heart-pink);
+            margin: 0 4px;
+        }
+
+        .section-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--lavender-soft);
+            margin-bottom: 24px;
+        }
+
+        /* Features */
+        .features {
+            padding: 80px 32px 100px;
+        }
+
+        .features .section-label {
+            text-align: center;
+        }
+
+        .features-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(28px, 4vw, 36px);
+            font-weight: 300;
+            text-align: center;
+            color: var(--lavender-deep);
+            margin-bottom: 56px;
+            letter-spacing: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 880px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: default;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--lavender-light);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .feature-icon {
+            font-size: 28px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .feature-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            letter-spacing: 0.5px;
+            line-height: 1.5;
+        }
+
+        /* Screenshots */
+        .screenshots {
+            padding: 80px 0 100px;
+        }
+
+        .screenshots .section-label {
+            text-align: center;
+            padding: 0 32px;
+        }
+
+        .screenshots-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(28px, 4vw, 36px);
+            font-weight: 300;
+            text-align: center;
+            color: var(--lavender-deep);
+            margin-bottom: 48px;
+            letter-spacing: 2px;
+            padding: 0 32px;
+        }
+
+        .screenshots-scroll {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 0 32px 24px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: var(--lavender-light) transparent;
+        }
+
+        .screenshots-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .screenshots-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .screenshots-scroll::-webkit-scrollbar-thumb {
+            background: var(--lavender-light);
+            border-radius: 3px;
+        }
+
+        .screenshot-placeholder {
+            flex: 0 0 240px;
+            height: 420px;
+            background: linear-gradient(135deg, var(--lavender-pale) 0%, var(--moon-glow) 50%, rgba(212, 160, 185, 0.15) 100%);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--text-light);
+            letter-spacing: 1px;
+            scroll-snap-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .screenshot-placeholder:hover {
+            border-color: var(--lavender-soft);
+            box-shadow: var(--shadow-soft);
+        }
+
+        /* Download */
+        .download {
+            padding: 100px 32px;
+            text-align: center;
+        }
+
+        .download-inner {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 56px 40px;
+            background: linear-gradient(135deg, rgba(74, 58, 107, 0.03) 0%, rgba(212, 160, 185, 0.06) 100%);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+        }
+
+        .download-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 300;
+            color: var(--lavender-deep);
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .download-subtitle {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 32px;
+        }
+
+        .app-store-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--text-primary);
+            color: white;
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .app-store-btn:hover {
+            background: var(--lavender-deep);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .app-store-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 48px 32px;
+            text-align: center;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-links a:hover {
+            color: var(--lavender-mid);
+        }
+
+        .footer-copy {
+            font-size: 12px;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .header {
+                padding: 14px 20px;
+            }
+
+            .hero {
+                padding: 100px 24px 60px;
+                min-height: 90vh;
+            }
+
+            .hero-icon {
+                width: 96px;
+                height: 96px;
+                border-radius: 22px;
+                margin-bottom: 32px;
+            }
+
+            .hero-title {
+                letter-spacing: 4px;
+            }
+
+            .about, .features, .download {
+                padding: 60px 24px 80px;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 14px;
+            }
+
+            .feature-card {
+                padding: 24px 16px;
+            }
+
+            .screenshot-placeholder {
+                flex: 0 0 200px;
+                height: 360px;
+            }
+
+            .screenshots-scroll {
+                padding: 0 24px 20px;
+            }
+
+            .download-inner {
+                padding: 40px 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .feature-card {
+                padding: 20px 12px;
+            }
+
+            .feature-icon {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+
+            .feature-name {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating moon decorations -->
+    <div class="moon-float moon-float--1"></div>
+    <div class="moon-float moon-float--2"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <a href="../index.html" class="lang-switch">日本語</a>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <img src="../images/icon.jpg" alt="Lullia App Icon" class="hero-icon">
+            <h1 class="hero-title">Lullia</h1>
+            <p class="hero-tagline">Gentle tracking for your mind and body.</p>
+            <div class="hero-moon" aria-hidden="true">&#x1F319;</div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about">
+        <div class="section-inner reveal">
+            <p class="section-label">About</p>
+            <p class="about-text">
+                Lullia is a wellness companion that helps you understand the subtle rhythms of your mind and body.
+                <span class="heart-icon" aria-hidden="true">&#x2661;</span>
+                Track your daily condition gently and discover the patterns that shape how you feel
+                &mdash; without pressure, at your own pace.
+            </p>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="section-inner">
+            <p class="section-label reveal">Features</p>
+            <h2 class="features-title reveal">Everything you need, nothing you don&rsquo;t.</h2>
+            <div class="features-grid">
+                <div class="feature-card reveal">
+                    <span class="feature-icon" aria-hidden="true">&#x1F33F;</span>
+                    <span class="feature-name">Body &amp; Mind<br>Tracking</span>
+                </div>
+                <div class="feature-card reveal">
+                    <span class="feature-icon" aria-hidden="true">&#x1F4C5;</span>
+                    <span class="feature-name">Calendar<br>View</span>
+                </div>
+                <div class="feature-card reveal">
+                    <span class="feature-icon" aria-hidden="true">&#x1F4CA;</span>
+                    <span class="feature-name">Charts &amp;<br>Analytics</span>
+                </div>
+                <div class="feature-card reveal">
+                    <span class="feature-icon" aria-hidden="true">&#x1F327;&#xFE0F;</span>
+                    <span class="feature-name">Barometric<br>Pressure Monitor</span>
+                </div>
+                <div class="feature-card reveal">
+                    <span class="feature-icon" aria-hidden="true">&#x1F319;</span>
+                    <span class="feature-name">Gentle<br>Mode</span>
+                </div>
+                <div class="feature-card reveal">
+                    <span class="feature-icon" aria-hidden="true">&#x1F514;</span>
+                    <span class="feature-name">Reminders</span>
+                </div>
+                <div class="feature-card reveal">
+                    <span class="feature-icon" aria-hidden="true">&#x1F4E4;</span>
+                    <span class="feature-name">CSV<br>Export</span>
+                </div>
+                <div class="feature-card reveal">
+                    <span class="feature-icon" aria-hidden="true">&#x2601;&#xFE0F;</span>
+                    <span class="feature-name">iCloud<br>Sync</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots -->
+    <section class="screenshots">
+        <p class="section-label reveal">Screenshots</p>
+        <h2 class="screenshots-title reveal">A calm space for self-awareness.</h2>
+        <div class="screenshots-scroll">
+            <div class="screenshot-placeholder">Screenshot 1</div>
+            <div class="screenshot-placeholder">Screenshot 2</div>
+            <div class="screenshot-placeholder">Screenshot 3</div>
+            <div class="screenshot-placeholder">Screenshot 4</div>
+        </div>
+    </section>
+
+    <!-- Download -->
+    <section class="download">
+        <div class="download-inner reveal">
+            <h2 class="download-title">Download</h2>
+            <p class="download-subtitle">Available on the App Store</p>
+            <a href="#" class="app-store-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 21.99 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.1 21.99C7.79 22.03 6.8 20.68 5.96 19.47C4.25 16.97 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.89C10.1 6.87 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/>
+                </svg>
+                Download on the App Store
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="https://x.com/latte_stream" target="_blank" rel="noopener noreferrer">X @latte_stream</a>
+        </div>
+        <p class="footer-copy">&copy; 2026 LattyCat</p>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        const header = document.querySelector('.header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 40);
+        }, { passive: true });
+
+        // Scroll reveal
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Stagger animation for cards
+                    const card = entry.target;
+                    const parent = card.parentElement;
+                    if (parent && parent.classList.contains('features-grid')) {
+                        const siblings = Array.from(parent.children);
+                        const i = siblings.indexOf(card);
+                        card.style.transitionDelay = `${i * 0.06}s`;
+                    }
+                    card.classList.add('visible');
+                    observer.unobserve(card);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        reveals.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

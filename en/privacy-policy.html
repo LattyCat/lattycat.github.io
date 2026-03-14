@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Lullia</title>
+    <link rel="icon" href="../images/icon.jpg" type="image/jpeg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --lavender-deep: #6B5B95;
+            --lavender-mid: #9B8EC4;
+            --lavender-light: #C4B8E0;
+            --lavender-pale: #EDE8F5;
+            --lavender-wash: #F7F4FC;
+            --cream: #FDFCFA;
+            --text-primary: #2D2640;
+            --text-secondary: #5A5270;
+            --text-muted: #8A82A0;
+            --border-soft: rgba(107, 91, 149, 0.12);
+            --shadow-soft: 0 2px 20px rgba(107, 91, 149, 0.08);
+            --shadow-hover: 0 4px 30px rgba(107, 91, 149, 0.14);
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 400;
+            color: var(--text-primary);
+            background: var(--cream);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Background atmosphere */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100vh;
+            background:
+                radial-gradient(ellipse at 20% 0%, rgba(196, 184, 224, 0.25) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(155, 142, 196, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(237, 232, 245, 0.3) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(253, 252, 250, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .header-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .header-brand img {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(107, 91, 149, 0.15);
+        }
+
+        .header-brand span {
+            font-family: 'Fraunces', serif;
+            font-weight: 500;
+            font-size: 1.2rem;
+            letter-spacing: -0.01em;
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .lang-switch {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--lavender-deep);
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--lavender-light);
+            transition: all 0.25s ease;
+        }
+
+        .lang-switch:hover {
+            background: var(--lavender-pale);
+            border-color: var(--lavender-mid);
+        }
+
+        /* Main content */
+        .main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 48px 24px 80px;
+        }
+
+        /* Page title */
+        .page-title {
+            font-family: 'Fraunces', serif;
+            font-weight: 500;
+            font-size: 2.4rem;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .last-updated {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            margin-bottom: 48px;
+        }
+
+        /* Introduction */
+        .intro {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 48px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: 44px;
+        }
+
+        .section-title {
+            font-family: 'Fraunces', serif;
+            font-weight: 500;
+            font-size: 1.45rem;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+            margin-bottom: 20px;
+            padding-left: 16px;
+            border-left: 3px solid var(--lavender-mid);
+        }
+
+        .section p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+
+        .section ul {
+            list-style: none;
+            margin-bottom: 16px;
+        }
+
+        .section ul li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .section ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--lavender-mid);
+        }
+
+        /* Data category cards */
+        .data-category {
+            background: var(--lavender-wash);
+            border-radius: 14px;
+            padding: 20px 24px;
+            margin-bottom: 14px;
+            border: 1px solid var(--border-soft);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .data-category:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .data-category-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--lavender-deep);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .data-category-title .icon {
+            font-size: 1.1rem;
+        }
+
+        .data-category p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .data-category .storage-note {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--lavender-deep);
+            background: rgba(107, 91, 149, 0.08);
+            padding: 3px 10px;
+            border-radius: 12px;
+        }
+
+        /* Third-party services table */
+        .services-grid {
+            display: grid;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .service-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            background: var(--lavender-wash);
+            border-radius: 12px;
+            padding: 18px 22px;
+            border: 1px solid var(--border-soft);
+        }
+
+        .service-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--lavender-deep);
+            white-space: nowrap;
+            min-width: 100px;
+        }
+
+        .service-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Contact link */
+        .contact-link {
+            color: var(--lavender-deep);
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid var(--lavender-light);
+            transition: border-color 0.2s ease;
+        }
+
+        .contact-link:hover {
+            border-color: var(--lavender-deep);
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border-soft);
+            padding: 32px 24px;
+            text-align: center;
+        }
+
+        .footer-inner {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-home {
+            display: inline-block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--lavender-deep);
+            text-decoration: none;
+            padding: 10px 28px;
+            border-radius: 24px;
+            border: 1px solid var(--lavender-light);
+            transition: all 0.25s ease;
+            margin-bottom: 20px;
+        }
+
+        .footer-home:hover {
+            background: var(--lavender-pale);
+            border-color: var(--lavender-mid);
+            transform: translateY(-1px);
+        }
+
+        .footer-copy {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .page-title {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.25rem;
+            }
+
+            .main {
+                padding: 32px 18px 60px;
+            }
+
+            .data-category {
+                padding: 16px 18px;
+            }
+
+            .service-item {
+                flex-direction: column;
+                gap: 6px;
+                padding: 14px 18px;
+            }
+
+            .service-name {
+                min-width: unset;
+            }
+        }
+
+        /* Fade-in animation */
+        .section {
+            opacity: 0;
+            transform: translateY(16px);
+            animation: fadeUp 0.5s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section:nth-child(1) { animation-delay: 0.05s; }
+        .section:nth-child(2) { animation-delay: 0.1s; }
+        .section:nth-child(3) { animation-delay: 0.15s; }
+        .section:nth-child(4) { animation-delay: 0.2s; }
+        .section:nth-child(5) { animation-delay: 0.25s; }
+        .section:nth-child(6) { animation-delay: 0.3s; }
+        .section:nth-child(7) { animation-delay: 0.35s; }
+        .section:nth-child(8) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="header-brand">
+                <img src="../images/icon.jpg" alt="Lullia">
+                <span>Lullia</span>
+            </a>
+            <nav class="header-nav">
+                <a href="../privacy-policy.html" class="lang-switch">日本語</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <h1 class="page-title">Privacy Policy</h1>
+        <p class="last-updated">Last updated: March 14, 2026</p>
+
+        <div class="intro">
+            <p>This Privacy Policy describes how Lullia ("we", "our", or "the app") collects, uses, and protects your information. Lullia is a wellness app designed to help you track your health and mood in relation to barometric pressure changes. We are committed to protecting your privacy and ensuring transparency in how your data is handled.</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Data We Collect</h2>
+            <p>Lullia collects and processes the following categories of data:</p>
+
+            <div class="data-category">
+                <div class="data-category-title">Wellness Data</div>
+                <p>Health and mood records you create within the app, including daily condition logs, symptom tracking, and personal notes.</p>
+                <span class="storage-note">Stored via SwiftData + iCloud</span>
+            </div>
+
+            <div class="data-category">
+                <div class="data-category-title">Location Data</div>
+                <p>Your location is used solely to retrieve local barometric pressure information. Location data is cached locally on your device and is never transmitted to our servers.</p>
+                <span class="storage-note">Local cache only, never sent to servers</span>
+            </div>
+
+            <div class="data-category">
+                <div class="data-category-title">Barometric Pressure Data</div>
+                <p>Atmospheric pressure data is retrieved from the Open-Meteo API based on your location to provide weather-related health insights.</p>
+                <span class="storage-note">Retrieved from Open-Meteo API</span>
+            </div>
+
+            <div class="data-category">
+                <div class="data-category-title">App Settings</div>
+                <p>Your preferences and configuration settings within the app, such as notification preferences and display options.</p>
+                <span class="storage-note">Stored locally via UserDefaults</span>
+            </div>
+
+            <div class="data-category">
+                <div class="data-category-title">Advertising Data</div>
+                <p>Lullia uses Google AdMob to display advertisements. The App Tracking Transparency (ATT) framework is used to obtain your consent before any tracking for advertising purposes.</p>
+                <span class="storage-note">Google AdMob with ATT consent</span>
+            </div>
+
+            <div class="data-category">
+                <div class="data-category-title">Subscription Information</div>
+                <p>In-app purchases and subscriptions are processed entirely by Apple through StoreKit. The developer does not have access to your payment information.</p>
+                <span class="storage-note">Processed by Apple StoreKit</span>
+            </div>
+
+            <div class="data-category">
+                <div class="data-category-title">Background Tasks</div>
+                <p>The app performs background tasks to deliver timely notifications and update barometric pressure data, ensuring you receive relevant health alerts.</p>
+                <span class="storage-note">For notifications and data updates</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">How We Use Your Data</h2>
+            <p>Your data is used for the following purposes:</p>
+            <ul>
+                <li>Providing core app functionality, including wellness tracking and barometric pressure monitoring</li>
+                <li>Generating analytics and charts to help you visualize health trends over time</li>
+                <li>Sending notifications about significant barometric pressure changes and reminders</li>
+                <li>Displaying relevant advertisements through Google AdMob</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Third-Party Services</h2>
+            <p>Lullia integrates with the following third-party services:</p>
+            <div class="services-grid">
+                <div class="service-item">
+                    <span class="service-name">Apple</span>
+                    <span class="service-desc">iCloud for data synchronization across your devices, and StoreKit for processing in-app purchases and subscriptions.</span>
+                </div>
+                <div class="service-item">
+                    <span class="service-name">Open-Meteo</span>
+                    <span class="service-desc">Provides barometric pressure and weather data through their public API based on your location.</span>
+                </div>
+                <div class="service-item">
+                    <span class="service-name">Google</span>
+                    <span class="service-desc">AdMob is used to serve advertisements within the app. Ad personalization respects your ATT preferences.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Data Storage and Security</h2>
+            <p>Your wellness data is stored locally on your device and synchronized through Apple's iCloud service. We employ industry-standard security measures to protect your information.</p>
+            <p>We do not operate our own servers for storing user data. All personal data remains on your device or within Apple's secure iCloud infrastructure.</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Your Rights</h2>
+            <p>You have the following rights regarding your data:</p>
+            <ul>
+                <li>Delete your data at any time directly from within the app</li>
+                <li>Export your wellness records in CSV format for personal use</li>
+                <li>Control ad tracking preferences through the App Tracking Transparency (ATT) settings on your device</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Children's Privacy</h2>
+            <p>Lullia is not intended for use by children under the age of 13. We do not knowingly collect personal information from children under 13. If you believe we have inadvertently collected such information, please contact us so we can promptly remove it.</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Changes to This Policy</h2>
+            <p>We may update this Privacy Policy from time to time. When changes are made, you will be notified through the app and updates will be reflected on this page. We encourage you to review this policy periodically.</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Contact Us</h2>
+            <p>If you have any questions or concerns about this Privacy Policy or your data, please reach out to us on X (formerly Twitter):</p>
+            <p><a href="https://x.com/latte_stream" class="contact-link" target="_blank" rel="noopener noreferrer">@latte_stream</a></p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <a href="index.html" class="footer-home">Back to Home</a>
+            <p class="footer-copy">&copy; 2026 LattyCat</p>
+        </div>
+    </footer>
+</body>
+</html>

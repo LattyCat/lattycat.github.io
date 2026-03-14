@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lullia（ルリア）- こころとからだに、やさしい記録を。</title>
+  <meta name="description" content="Lullia（ルリア）は、こころとからだの状態をやさしく記録するウェルネスアプリです。毎日の体調・気分・生理周期などを簡単に記録し、あなたの健康をサポートします。">
+  <link rel="icon" href="images/icon.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+    :root {
+      --rose: #c4687a;
+      --rose-light: #e8a0ad;
+      --rose-pale: #f2d0d7;
+      --teal: #3a8c8c;
+      --teal-deep: #2a6b6b;
+      --teal-light: #6fb5b0;
+      --lavender: #d4b8d4;
+      --lavender-pale: #efe0f0;
+      --night: #1e2a3a;
+      --night-soft: #2a3a50;
+      --cream: #faf5f7;
+      --text: #3d2e3c;
+      --text-soft: #6b5a6a;
+      --glow: rgba(255, 255, 255, 0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Zen Maru Gothic', 'Hiragino Maru Gothic Pro', sans-serif;
+      color: var(--text);
+      background: var(--cream);
+      line-height: 1.8;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.4s, backdrop-filter 0.4s;
+    }
+    .nav.scrolled {
+      background: rgba(250, 245, 247, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 1px 20px rgba(0,0,0,0.06);
+    }
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--rose);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--teal); }
+    .nav-lang {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      text-decoration: none;
+      padding: 0.3rem 0.9rem;
+      border: 1px solid var(--rose-light);
+      border-radius: 20px;
+      transition: all 0.3s;
+      letter-spacing: 0.08em;
+    }
+    .nav-lang:hover {
+      background: var(--rose);
+      color: #fff;
+      border-color: var(--rose);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      background:
+        radial-gradient(ellipse 80% 60% at 30% 20%, rgba(196, 104, 122, 0.25), transparent),
+        radial-gradient(ellipse 70% 50% at 70% 70%, rgba(58, 140, 140, 0.2), transparent),
+        radial-gradient(ellipse 50% 40% at 50% 50%, rgba(212, 184, 212, 0.18), transparent),
+        linear-gradient(170deg, #faf5f7 0%, #f0e6ee 40%, #e6eff2 100%);
+      overflow: hidden;
+    }
+
+    /* Decorative moon crescent - CSS only */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 8%;
+      right: 8%;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      box-shadow:
+        20px -10px 0 0 rgba(255,255,255,0.35),
+        20px -10px 40px 10px rgba(212, 184, 212, 0.15);
+      opacity: 0.7;
+      animation: float 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    /* Floating particles */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1.5px 1.5px at 15% 25%, rgba(196,104,122,0.25), transparent),
+        radial-gradient(1px 1px at 45% 15%, rgba(212,184,212,0.3), transparent),
+        radial-gradient(1.5px 1.5px at 75% 35%, rgba(58,140,140,0.2), transparent),
+        radial-gradient(1px 1px at 25% 75%, rgba(212,184,212,0.25), transparent),
+        radial-gradient(1.5px 1.5px at 85% 65%, rgba(196,104,122,0.2), transparent),
+        radial-gradient(1px 1px at 55% 85%, rgba(58,140,140,0.25), transparent);
+      pointer-events: none;
+      animation: twinkle 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(3deg); }
+    }
+    @keyframes twinkle {
+      0% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .hero-icon {
+      width: 130px;
+      height: 130px;
+      border-radius: 30px;
+      box-shadow:
+        0 8px 40px rgba(196, 104, 122, 0.25),
+        0 2px 12px rgba(0,0,0,0.08);
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+      animation: iconIn 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes iconIn {
+      from { opacity: 0; transform: scale(0.8) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      color: var(--night);
+      letter-spacing: 0.06em;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 1s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .hero-title-ja {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-weight: 400;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--text-soft);
+      margin-top: 0.3rem;
+      letter-spacing: 0.15em;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 1s 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .hero-tagline {
+      font-size: clamp(1rem, 2.8vw, 1.35rem);
+      font-weight: 400;
+      color: var(--text);
+      margin-top: 1.8rem;
+      letter-spacing: 0.12em;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 1s 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .hero-sub {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      margin-top: 0.8rem;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 1s 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      animation: fadeUp 1s 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .hero-scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--rose-light), transparent);
+      margin: 0 auto;
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.3); }
+    }
+
+    /* ── Section common ── */
+    .section {
+      padding: 5rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+      font-weight: 700;
+      color: var(--night);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── About ── */
+    .about {
+      position: relative;
+    }
+    .about-text {
+      font-size: 1.05rem;
+      color: var(--text-soft);
+      max-width: 680px;
+      line-height: 2;
+    }
+    .about-text strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+    .about-divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--rose-light), var(--teal-light));
+      margin-top: 2rem;
+      border-radius: 2px;
+    }
+
+    /* ── Features ── */
+    .features-section {
+      background:
+        radial-gradient(ellipse 60% 40% at 80% 20%, rgba(58,140,140,0.06), transparent),
+        radial-gradient(ellipse 50% 50% at 20% 80%, rgba(196,104,122,0.06), transparent);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.2rem;
+      margin-top: 2rem;
+    }
+    .feature-card {
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(212, 184, 212, 0.2);
+      border-radius: 16px;
+      padding: 1.6rem 1.4rem;
+      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s, border-color 0.35s;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--rose-light), var(--lavender), var(--teal-light));
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(196,104,122,0.1), 0 2px 8px rgba(0,0,0,0.04);
+      border-color: rgba(212, 184, 212, 0.35);
+    }
+    .feature-card:hover::before { opacity: 1; }
+
+    .feature-icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .feature-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--night);
+      margin-bottom: 0.4rem;
+    }
+    .feature-desc {
+      font-size: 0.82rem;
+      color: var(--text-soft);
+      line-height: 1.7;
+    }
+
+    /* ── Screenshots ── */
+    .screenshots-section {
+      padding: 5rem 0;
+      overflow: hidden;
+    }
+    .screenshots-header {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .screenshots-scroll {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      padding: 2rem 2rem 2rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .screenshots-scroll::-webkit-scrollbar { display: none; }
+    .screenshot-placeholder {
+      flex: 0 0 240px;
+      height: 420px;
+      border-radius: 24px;
+      scroll-snap-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.05em;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    }
+    .screenshot-placeholder:nth-child(1) {
+      background: linear-gradient(160deg, #c4687a, #a05070);
+    }
+    .screenshot-placeholder:nth-child(2) {
+      background: linear-gradient(160deg, #9b7bab, #7a5a8e);
+    }
+    .screenshot-placeholder:nth-child(3) {
+      background: linear-gradient(160deg, #5a9e9e, #3a8080);
+    }
+    .screenshot-placeholder:nth-child(4) {
+      background: linear-gradient(160deg, #8b7e9e, #6b5e80);
+    }
+    .screenshot-placeholder::after {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 18px;
+      pointer-events: none;
+    }
+
+    /* ── Download ── */
+    .download-section {
+      text-align: center;
+      padding: 5rem 2rem 6rem;
+      position: relative;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 100%, rgba(196,104,122,0.08), transparent),
+        radial-gradient(ellipse 60% 40% at 50% 0%, rgba(58,140,140,0.06), transparent);
+    }
+    .download-section .section-title {
+      margin-bottom: 0.8rem;
+    }
+    .download-sub {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      margin-bottom: 2rem;
+    }
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: linear-gradient(135deg, var(--night) 0%, var(--night-soft) 100%);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.9rem 2rem;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s;
+      box-shadow: 0 4px 20px rgba(30,42,58,0.25);
+    }
+    .download-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 32px rgba(30,42,58,0.35);
+    }
+    .download-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      background: var(--night);
+      color: rgba(255,255,255,0.6);
+      padding: 3rem 2rem;
+      text-align: center;
+      font-size: 0.85rem;
+      line-height: 2;
+    }
+    .footer a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer a:hover {
+      color: var(--rose-light);
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .footer-copy {
+      margin-top: 0.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .hero { min-height: 100svh; padding: 5rem 1.5rem 3rem; }
+      .hero::before { width: 80px; height: 80px; top: 12%; right: 6%; }
+      .hero-icon { width: 100px; height: 100px; border-radius: 24px; }
+      .section { padding: 3.5rem 1.5rem; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+      .feature-card { padding: 1.2rem 1rem; }
+      .screenshot-placeholder { flex: 0 0 200px; height: 360px; }
+      .nav { padding: 0.8rem 1.2rem; }
+    }
+
+    @media (max-width: 420px) {
+      .features-grid { grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+      .feature-card { padding: 1rem 0.9rem; }
+      .feature-desc { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav" id="nav">
+    <a href="#" class="nav-logo">Lullia <span>.</span></a>
+    <a href="en/index.html" class="nav-lang">EN</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <img src="images/icon.jpg" alt="Lullia アプリアイコン" class="hero-icon">
+    <h1 class="hero-title">Lullia</h1>
+    <p class="hero-title-ja">ルリア</p>
+    <p class="hero-tagline">こころとからだに、やさしい記録を。</p>
+    <p class="hero-sub">wellness tracking app</p>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section about reveal">
+    <p class="section-label">About</p>
+    <h2 class="section-title">あなたの毎日に寄り添う記録</h2>
+    <p class="about-text">
+      <strong>Lullia（ルリア）</strong>は、こころとからだの状態をやさしく記録するウェルネスアプリです。<br>
+      体調・気分・生理周期など、毎日の小さな変化を簡単に記録し、あなたの健康リズムを見える化します。<br>
+      無理なく続けられるシンプルなデザインで、あなたらしいセルフケアをサポートします。
+    </p>
+    <div class="about-divider"></div>
+  </section>
+
+  <!-- Features -->
+  <section class="section features-section reveal">
+    <p class="section-label">Features</p>
+    <h2 class="section-title">できること</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon" aria-hidden="true">&#127769;</span>
+        <p class="feature-name">からだとこころの記録</p>
+        <p class="feature-desc">体調・気分・症状などをワンタップで手軽に記録できます。</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon" aria-hidden="true">&#128197;</span>
+        <p class="feature-name">カレンダー</p>
+        <p class="feature-desc">記録した内容をカレンダー形式でひと目で確認。</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon" aria-hidden="true">&#128200;</span>
+        <p class="feature-name">グラフ・分析</p>
+        <p class="feature-desc">体調や気分の変化をグラフで可視化し、傾向を把握。</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon" aria-hidden="true">&#127752;</span>
+        <p class="feature-name">気圧モニタリング</p>
+        <p class="feature-desc">気圧の変化と体調の関連を記録・確認できます。</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon" aria-hidden="true">&#128156;</span>
+        <p class="feature-name">やさしいモード</p>
+        <p class="feature-desc">つらい日でも最小限の操作でかんたん記録。</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon" aria-hidden="true">&#128276;</span>
+        <p class="feature-name">リマインダー</p>
+        <p class="feature-desc">記録忘れを防ぐ、やさしい通知機能。</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon" aria-hidden="true">&#128196;</span>
+        <p class="feature-name">CSVエクスポート</p>
+        <p class="feature-desc">記録データをCSVで書き出し、自由に活用。</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon" aria-hidden="true">&#9729;&#65039;</span>
+        <p class="feature-name">iCloud同期</p>
+        <p class="feature-desc">複数デバイス間でデータを安全に同期。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Screenshots -->
+  <section class="screenshots-section reveal">
+    <div class="screenshots-header">
+      <p class="section-label">Screenshots</p>
+      <h2 class="section-title">スクリーンショット</h2>
+    </div>
+    <div class="screenshots-scroll">
+      <div class="screenshot-placeholder">Screenshot 1</div>
+      <div class="screenshot-placeholder">Screenshot 2</div>
+      <div class="screenshot-placeholder">Screenshot 3</div>
+      <div class="screenshot-placeholder">Screenshot 4</div>
+    </div>
+  </section>
+
+  <!-- Download -->
+  <section class="download-section reveal">
+    <p class="section-label">Download</p>
+    <h2 class="section-title">App Storeでダウンロード</h2>
+    <p class="download-sub">iOS向けに無料で公開中です。</p>
+    <a href="#" class="download-btn">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      App Storeからダウンロード
+    </a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="privacy-policy.html">プライバシーポリシー</a>
+      <a href="https://x.com/latte_stream" target="_blank" rel="noopener">X @latte_stream</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 LattyCat</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          entry.target.style.transitionDelay = '0.1s';
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
