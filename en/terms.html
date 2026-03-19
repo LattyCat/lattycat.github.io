@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - Lullia</title>
+    <title>Terms of Service - Lullia</title>
     <link rel="icon" href="../images/icon.jpg" type="image/jpeg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,6 +22,10 @@
             --border-soft: rgba(107, 91, 149, 0.12);
             --shadow-soft: 0 2px 20px rgba(107, 91, 149, 0.08);
             --shadow-hover: 0 4px 30px rgba(107, 91, 149, 0.14);
+            --warning-bg: #FDF6F6;
+            --warning-border: rgba(180, 100, 110, 0.2);
+            --warning-accent: #B4646E;
+            --warning-text: #7A3A45;
         }
 
         *, *::before, *::after {
@@ -205,8 +209,20 @@
             background: var(--lavender-mid);
         }
 
-        /* Data category cards */
-        .data-category {
+        .section a {
+            color: var(--lavender-deep);
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid var(--lavender-light);
+            transition: border-color 0.2s ease;
+        }
+
+        .section a:hover {
+            border-color: var(--lavender-deep);
+        }
+
+        /* Definition cards */
+        .definition-card {
             background: var(--lavender-wash);
             border-radius: 14px;
             padding: 20px 24px;
@@ -215,32 +231,25 @@
             transition: box-shadow 0.3s ease;
         }
 
-        .data-category:hover {
+        .definition-card:hover {
             box-shadow: var(--shadow-hover);
         }
 
-        .data-category-title {
+        .definition-card-title {
             font-weight: 600;
             font-size: 0.95rem;
             color: var(--lavender-deep);
             margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
-        .data-category-title .icon {
-            font-size: 1.1rem;
-        }
-
-        .data-category p {
+        .definition-card p {
             color: var(--text-secondary);
             font-size: 0.9rem;
             line-height: 1.7;
-            margin: 0;
+            margin: 0 0 4px;
         }
 
-        .data-category .storage-note {
+        .definition-card .note {
             display: inline-block;
             margin-top: 8px;
             font-size: 0.8rem;
@@ -251,35 +260,25 @@
             border-radius: 12px;
         }
 
-        /* Third-party services table */
-        .services-grid {
-            display: grid;
-            gap: 12px;
-            margin-top: 16px;
+        /* Medical disclaimer */
+        .medical-disclaimer .section-title {
+            border-left-color: var(--warning-accent);
+            color: var(--warning-text);
         }
 
-        .service-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            background: var(--lavender-wash);
+        .warning-box {
+            background: var(--warning-bg);
             border-radius: 12px;
             padding: 18px 22px;
-            border: 1px solid var(--border-soft);
+            margin-bottom: 14px;
+            border: 1px solid var(--warning-border);
+            border-left: 4px solid var(--warning-accent);
         }
 
-        .service-name {
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--lavender-deep);
-            white-space: nowrap;
-            min-width: 100px;
-        }
-
-        .service-desc {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
+        .warning-box p {
+            color: var(--warning-text);
+            font-weight: 500;
+            margin: 0;
         }
 
         /* Contact link */
@@ -307,6 +306,14 @@
             margin: 0 auto;
         }
 
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
         .footer-home {
             display: inline-block;
             font-size: 0.9rem;
@@ -317,7 +324,6 @@
             border-radius: 24px;
             border: 1px solid var(--lavender-light);
             transition: all 0.25s ease;
-            margin-bottom: 20px;
         }
 
         .footer-home:hover {
@@ -346,18 +352,14 @@
                 padding: 32px 18px 60px;
             }
 
-            .data-category {
+            .definition-card {
                 padding: 16px 18px;
             }
 
-            .service-item {
+            .footer-links {
                 flex-direction: column;
-                gap: 6px;
-                padding: 14px 18px;
-            }
-
-            .service-name {
-                min-width: unset;
+                align-items: center;
+                gap: 12px;
             }
         }
 
@@ -383,6 +385,11 @@
         .section:nth-child(6) { animation-delay: 0.3s; }
         .section:nth-child(7) { animation-delay: 0.35s; }
         .section:nth-child(8) { animation-delay: 0.4s; }
+        .section:nth-child(9) { animation-delay: 0.45s; }
+        .section:nth-child(10) { animation-delay: 0.5s; }
+        .section:nth-child(11) { animation-delay: 0.55s; }
+        .section:nth-child(12) { animation-delay: 0.6s; }
+        .section:nth-child(13) { animation-delay: 0.65s; }
     </style>
 </head>
 <body>
@@ -393,134 +400,178 @@
                 <span>Lullia</span>
             </a>
             <nav class="header-nav">
-                <a href="../privacy-policy.html" class="lang-switch">日本語</a>
+                <a href="../terms.html" class="lang-switch">日本語</a>
             </nav>
         </div>
     </header>
 
     <main class="main">
-        <h1 class="page-title">Privacy Policy</h1>
-        <p class="last-updated">Last updated: March 19, 2026</p>
+        <h1 class="page-title">Terms of Service</h1>
+        <p class="last-updated">Effective: March 19, 2026</p>
 
         <div class="intro">
-            <p>This Privacy Policy describes how Lullia ("we", "our", or "the app") collects, uses, and protects your information. Lullia is a wellness app designed to help you track your health and mood in relation to barometric pressure changes. We are committed to protecting your privacy and ensuring transparency in how your data is handled.</p>
+            <p>These Terms of Service ("Terms") govern your use of the Lullia wellness app ("the App"). By downloading, installing, or using the App, you agree to be bound by these Terms. Please read them carefully before using the App.</p>
         </div>
 
+        <!-- 1. Definitions -->
         <div class="section">
-            <h2 class="section-title">Data We Collect</h2>
-            <p>Lullia collects and processes the following categories of data:</p>
+            <h2 class="section-title">Definitions</h2>
 
-            <div class="data-category">
-                <div class="data-category-title">Wellness Data</div>
-                <p>Health and mood records you create within the app, including daily condition logs, symptom tracking, and personal notes.</p>
-                <span class="storage-note">Stored via SwiftData + iCloud</span>
+            <div class="definition-card">
+                <div class="definition-card-title">The App</div>
+                <p>The iOS wellness application "Lullia" and all associated services.</p>
             </div>
 
-            <div class="data-category">
-                <div class="data-category-title">Location Data</div>
-                <p>Your GPS location is used to retrieve local barometric pressure data. You can enable or disable location access in the app's Settings. When disabled, Tokyo's barometric pressure data is used as the default. Location data is cached locally on your device and is never transmitted to our servers.</p>
-                <span class="storage-note">Local cache only, never sent to servers</span>
+            <div class="definition-card">
+                <div class="definition-card-title">You / User</div>
+                <p>Any individual who downloads, installs, or uses the App.</p>
             </div>
 
-            <div class="data-category">
-                <div class="data-category-title">Barometric Pressure Data</div>
-                <p>Atmospheric pressure data is retrieved from the Open-Meteo API based on your location to provide weather-related health insights.</p>
-                <span class="storage-note">Retrieved from Open-Meteo API</span>
+            <div class="definition-card">
+                <div class="definition-card-title">Developer</div>
+                <p>The individual developer (LattyCat) who develops and operates the App.</p>
             </div>
 
-            <div class="data-category">
-                <div class="data-category-title">App Settings</div>
-                <p>Your preferences and configuration settings within the app, such as notification preferences and display options.</p>
-                <span class="storage-note">Stored locally via UserDefaults</span>
+            <div class="definition-card">
+                <div class="definition-card-title">Premium Plan</div>
+                <p>The paid subscription service offered within the App.</p>
             </div>
 
-            <div class="data-category">
-                <div class="data-category-title">Advertising Data</div>
-                <p>Lullia uses Google AdMob to display advertisements. The App Tracking Transparency (ATT) framework is used to obtain your consent before any tracking for advertising purposes.</p>
-                <span class="storage-note">Google AdMob with ATT consent</span>
-            </div>
-
-            <div class="data-category">
-                <div class="data-category-title">Subscription Information</div>
-                <p>In-app purchases and subscriptions are processed entirely by Apple through StoreKit. The developer does not have access to your payment information.</p>
-                <span class="storage-note">Processed by Apple StoreKit</span>
-            </div>
-
-            <div class="data-category">
-                <div class="data-category-title">Background Tasks</div>
-                <p>The app performs background tasks to deliver timely notifications and update barometric pressure data, ensuring you receive relevant health alerts.</p>
-                <span class="storage-note">For notifications and data updates</span>
+            <div class="definition-card">
+                <div class="definition-card-title">Content</div>
+                <p>All data you enter or record within the App, including health logs, mood records, and notes.</p>
             </div>
         </div>
 
+        <!-- 2. Description of Service -->
         <div class="section">
-            <h2 class="section-title">How We Use Your Data</h2>
-            <p>Your data is used for the following purposes:</p>
+            <h2 class="section-title">Description of Service</h2>
+            <p>Lullia is a wellness app that helps you gently track your daily health and mood, and explore their relationship with barometric pressure changes. Key features include:</p>
             <ul>
-                <li>Providing core app functionality, including wellness tracking and barometric pressure monitoring</li>
-                <li>Generating analytics and charts to help you visualize health trends over time</li>
-                <li>Sending notifications about significant barometric pressure changes and reminders</li>
-                <li>Displaying relevant advertisements through Google AdMob</li>
+                <li>Health, mood, and symptom tracking</li>
+                <li>Barometric pressure data integration</li>
+                <li>Charts and analytics for your records</li>
+                <li>Calendar view of your entries</li>
+                <li>Day View showing pressure changes and your condition over a 24-hour window</li>
+                <li>Reminder notifications</li>
+                <li>CSV data export</li>
+                <li>iCloud sync across your devices</li>
             </ul>
         </div>
 
+        <!-- 3. Account -->
         <div class="section">
-            <h2 class="section-title">Third-Party Services</h2>
-            <p>Lullia integrates with the following third-party services:</p>
-            <div class="services-grid">
-                <div class="service-item">
-                    <span class="service-name">Apple</span>
-                    <span class="service-desc">iCloud for data synchronization across your devices, and StoreKit for processing in-app purchases and subscriptions.</span>
-                </div>
-                <div class="service-item">
-                    <span class="service-name">Open-Meteo</span>
-                    <span class="service-desc">Provides barometric pressure and weather data through their public API based on your location.</span>
-                </div>
-                <div class="service-item">
-                    <span class="service-name">Google</span>
-                    <span class="service-desc">AdMob is used to serve advertisements within the app. Ad personalization respects your ATT preferences.</span>
-                </div>
+            <h2 class="section-title">Account</h2>
+            <p>No separate account registration is required to use the App. Your data is stored and synced through your Apple ID and iCloud account.</p>
+            <p>You are responsible for maintaining the security of your Apple ID and your device.</p>
+        </div>
+
+        <!-- 4. User Data -->
+        <div class="section">
+            <h2 class="section-title">User Data</h2>
+            <p>You retain full ownership of all Content you create within the App.</p>
+            <p>Your data is stored on your device using SwiftData and synchronized across your devices via iCloud. The Developer does not have direct access to your data.</p>
+            <p>You may export your records in CSV format for your personal use at any time.</p>
+            <p>For details on how your data is handled, please refer to our <a href="privacy-policy.html">Privacy Policy</a>.</p>
+        </div>
+
+        <!-- 5. Subscriptions -->
+        <div class="section">
+            <h2 class="section-title">Subscriptions</h2>
+            <p>The App offers a free plan and a Premium Plan.</p>
+
+            <div class="definition-card">
+                <div class="definition-card-title">Free Plan</div>
+                <p>Access to core features with advertisements displayed.</p>
             </div>
+
+            <div class="definition-card">
+                <div class="definition-card-title">Premium Plan</div>
+                <p>Ad-free experience with access to all premium features. Available as a monthly or annual subscription.</p>
+                <p>Pricing varies by country and region. Please refer to the App Store for current pricing in your area.</p>
+            </div>
+
+            <p>Subscriptions auto-renew unless cancelled at least 24 hours before the end of the current billing period.</p>
+            <p>You can manage or cancel your subscription through the App Store settings on your device.</p>
+            <p>All payments are processed by Apple. The Developer does not have access to your payment information.</p>
         </div>
 
+        <!-- 6. Intellectual Property -->
         <div class="section">
-            <h2 class="section-title">Data Storage and Security</h2>
-            <p>Your wellness data is stored locally on your device and synchronized through Apple's iCloud service. We employ industry-standard security measures to protect your information.</p>
-            <p>We do not operate our own servers for storing user data. All personal data remains on your device or within Apple's secure iCloud infrastructure.</p>
+            <h2 class="section-title">Intellectual Property</h2>
+            <p>All intellectual property rights in the App, including its design, source code, icons, text, graphics, and all other materials, belong to the Developer.</p>
+            <p>You are granted a personal, non-commercial, non-transferable license to use the App in accordance with these Terms. Copying, modifying, reverse engineering, or redistributing the App is prohibited.</p>
         </div>
 
+        <!-- 7. Medical Disclaimer -->
+        <div class="section medical-disclaimer">
+            <h2 class="section-title">Medical Disclaimer</h2>
+
+            <div class="warning-box">
+                <p>This App is not a medical device. The information provided by the App does not constitute medical advice.</p>
+            </div>
+
+            <div class="warning-box">
+                <p>Information regarding the correlation between barometric pressure and health conditions is provided for reference purposes only and should not be used as the basis for medical diagnosis or treatment.</p>
+            </div>
+
+            <p>If you have health concerns, always consult a physician or qualified healthcare professional.</p>
+            <p>The Developer assumes no responsibility for any actions taken based on information obtained through the use of the App.</p>
+        </div>
+
+        <!-- 8. Prohibited Activities -->
         <div class="section">
-            <h2 class="section-title">Your Rights</h2>
-            <p>You have the following rights regarding your data:</p>
+            <h2 class="section-title">Prohibited Activities</h2>
+            <p>You agree not to:</p>
             <ul>
-                <li>Delete your data at any time directly from within the app</li>
-                <li>Export your wellness records in CSV format for personal use</li>
-                <li>Control ad tracking preferences through the App Tracking Transparency (ATT) settings on your device</li>
+                <li>Modify, reverse engineer, or decompile the App</li>
+                <li>Use the App for any illegal purpose</li>
+                <li>Circumvent or disable any security features of the App</li>
+                <li>Interfere with other users' use of the App</li>
+                <li>Use the App for unauthorized commercial purposes</li>
             </ul>
         </div>
 
+        <!-- 9. Disclaimer and Limitation of Liability -->
         <div class="section">
-            <h2 class="section-title">Children's Privacy</h2>
-            <p>Lullia is not intended for use by children under the age of 13. We do not knowingly collect personal information from children under 13. If you believe we have inadvertently collected such information, please contact us so we can promptly remove it.</p>
+            <h2 class="section-title">Disclaimer &amp; Limitation of Liability</h2>
+            <p>The App is provided "as is" without warranties of any kind, whether express or implied, including but not limited to warranties of completeness, accuracy, reliability, or fitness for a particular purpose.</p>
+            <p>The Developer shall not be liable for:</p>
+            <ul>
+                <li>Any direct or indirect damages arising from the use or inability to use the App</li>
+                <li>Loss or corruption of data</li>
+                <li>Failures, changes, or discontinuation of third-party services (Apple iCloud, Open-Meteo, Google AdMob, etc.)</li>
+                <li>Internet connectivity issues</li>
+            </ul>
         </div>
 
+        <!-- 10. Changes to These Terms -->
         <div class="section">
-            <h2 class="section-title">Changes to This Policy</h2>
-            <p>We may update this Privacy Policy from time to time. When changes are made, you will be notified through the app and updates will be reflected on this page. We encourage you to review this policy periodically.</p>
+            <h2 class="section-title">Changes to These Terms</h2>
+            <p>We may update these Terms from time to time. When significant changes are made, you will be notified through the App and updates will be reflected on this page.</p>
+            <p>The revised Terms become effective upon posting on this page. Your continued use of the App after any changes constitutes acceptance of the updated Terms.</p>
         </div>
 
+        <!-- 11. Governing Law -->
+        <div class="section">
+            <h2 class="section-title">Governing Law</h2>
+            <p>These Terms shall be governed by and construed in accordance with the laws of Japan.</p>
+            <p>Any disputes arising from these Terms shall be subject to the exclusive jurisdiction of the courts of Japan.</p>
+        </div>
+
+        <!-- 12. Contact Us -->
         <div class="section">
             <h2 class="section-title">Contact Us</h2>
-            <p>If you have any questions or concerns about this Privacy Policy or your data, please reach out to us on X (formerly Twitter):</p>
+            <p>If you have any questions about these Terms, please reach out to us on X (formerly Twitter):</p>
             <p><a href="https://x.com/latte_stream" class="contact-link" target="_blank" rel="noopener noreferrer">@latte_stream</a></p>
         </div>
     </main>
 
     <footer class="footer">
         <div class="footer-inner">
-            <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:20px;">
+            <div class="footer-links">
                 <a href="index.html" class="footer-home">Back to Home</a>
-                <a href="terms.html" class="footer-home">Terms of Service</a>
+                <a href="privacy-policy.html" class="footer-home">Privacy Policy</a>
             </div>
             <p class="footer-copy">&copy; 2026 LattyCat</p>
         </div>
