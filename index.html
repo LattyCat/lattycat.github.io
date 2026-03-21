@@ -361,9 +361,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.7);
-      letter-spacing: 0.05em;
       position: relative;
       overflow: hidden;
       box-shadow: 0 8px 30px rgba(0,0,0,0.1);
@@ -387,6 +384,13 @@
       border: 1px solid rgba(255,255,255,0.15);
       border-radius: 18px;
       pointer-events: none;
+    }
+    .screenshot-placeholder img {
+      width: 85%;
+      height: auto;
+      border-radius: 16px;
+      position: relative;
+      z-index: 1;
     }
 
     /* ── Download ── */
@@ -590,10 +594,10 @@
       <h2 class="section-title">スクリーンショット</h2>
     </div>
     <div class="screenshots-scroll">
-      <div class="screenshot-placeholder">Screenshot 1</div>
-      <div class="screenshot-placeholder">Screenshot 2</div>
-      <div class="screenshot-placeholder">Screenshot 3</div>
-      <div class="screenshot-placeholder">Screenshot 4</div>
+      <div class="screenshot-placeholder"><img src="images/screen shots/1.png" alt="スクリーンショット 1"></div>
+      <div class="screenshot-placeholder"><img src="images/screen shots/2.png" alt="スクリーンショット 2"></div>
+      <div class="screenshot-placeholder"><img src="images/screen shots/3.png" alt="スクリーンショット 3"></div>
+      <div class="screenshot-placeholder"><img src="images/screen shots/4.png" alt="スクリーンショット 4"></div>
     </div>
   </section>
 
